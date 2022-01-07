@@ -1,0 +1,15 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: https://frmfaas.sybrin.com
+functions:
+  off-transaction-monitoring-service:
+    namespace: openfaas-fn
+    lang: dockerfile
+    handler: .
+    image: actio.azurecr.io/off-transaction-monitoring-service:latest
+    annotations:
+      com.openfaas.health.http.path: /health
+      com.openfaas.health.http.initialDelay: "45s"
+    secrets:
+      - frmpullsecret
