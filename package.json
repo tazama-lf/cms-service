@@ -85,17 +85,5 @@
     "ts-node-dev": "^1.1.6",
     "typedoc": "^0.20.37",
     "typescript": "^4.4.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run test"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
   }
 }
