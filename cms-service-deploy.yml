@@ -3,11 +3,11 @@ provider:
   name: openfaas
   gateway: https://frmfaas.sybrin.com
 functions:
-  off-transaction-monitoring-service:
+  off-cms-service:
     namespace: openfaas-fn
     lang: dockerfile
     handler: .
-    image: actio.azurecr.io/off-transaction-monitoring-service:latest
+    image: actio.azurecr.io/off-cms-service:latest
     annotations:
       com.openfaas.health.http.path: /health
       com.openfaas.health.http.initialDelay: "45s"
