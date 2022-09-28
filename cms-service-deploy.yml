@@ -8,6 +8,10 @@ functions:
     lang: dockerfile
     handler: .
     image: actio.azurecr.io/off-cms-service:latest
+    hostAliases:
+    - ip: "41.189.90.222"
+      hostnames:
+      - "cms.sybrin.co.za"
     annotations:
       com.openfaas.health.http.path: /health
       com.openfaas.health.http.initialDelay: "45s"
