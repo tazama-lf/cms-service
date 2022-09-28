@@ -18,9 +18,9 @@
   "license": "ISC",
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "start": "node build/server",
-    "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
-    "dev:debug": "ts-node-dev --transpile-only --respawn --inspect=4321 --project tsconfig.json ./src/server.ts",
+    "start": "node build/index",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "dev:debug": "ts-node-dev --transpile-only --respawn --inspect=4321 --project tsconfig.json ./src/index.ts",
     "fix": "npm run fix:prettier && npm run fix:eslint",
     "fix:eslint": "eslint --fix \"**/*.ts\"",
     "fix:prettier": "prettier --write \"**/*.ts\"",

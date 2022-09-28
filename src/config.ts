@@ -18,6 +18,10 @@ const config: IConfig = {
   apmURL: <string>process.env.APM_URL,
   forwardRequest:<string> process.env.FORWARD_REQUEST,
   forwardURL:<string> process.env.FORWARD_URL,
+  nuxeoAuth: <string>process.env.NUXEO_AUTH,
+  nuxeoHost: <string>process.env.NUXEO_HOST,
+  nuxeoFolderPath: <string>process.env.NUXEO_FOLDER_PATH,
+  nuxeoFolderId: <string>process.env.NUXEO_FOLDER_ID,
 };
 
 export { config };

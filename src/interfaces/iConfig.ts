@@ -8,4 +8,8 @@ export interface IConfig {
   apmURL: string;
   forwardRequest: string;
   forwardURL: string;
+  nuxeoAuth: string;
+  nuxeoHost: string;
+  nuxeoFolderPath: string;
+  nuxeoFolderId: string;
 }
