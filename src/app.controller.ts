@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { Context } from 'koa';
 import { config } from './config';
-import { LoggerService } from './utils';
-import axios from 'axios';
-import { config } from './config';
 import { sendReportResult } from './services/nuxeo';
+import { LoggerService } from './utils';
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {
   try {

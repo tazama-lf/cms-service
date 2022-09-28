@@ -57,6 +57,11 @@ ENV APM_SECRET_TOKEN=
 ENV FORWARD_REQUEST=true
 ENV FORWARD_URL=
 
+ENV NUXEO_AUTH=
+ENV NUXEO_HOST=
+ENV NUXEO_FOLDER_PATH=
+ENV NUXEO_FOLDER_ID=
+
 HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
 
 # Execute watchdog command
