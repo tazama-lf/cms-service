@@ -54,6 +54,8 @@ ENV LOGSTASH_URL=logstash.development:8080
 ENV APM_LOGGING=true
 ENV APM_URL=http://apm-server.development:8200
 ENV APM_SECRET_TOKEN=
+ENV FORWARD_REQUEST=true
+ENV FORWARD_URL=
 
 HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
 

@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { Context } from 'koa';
+import { config } from './config';
 import { LoggerService } from './utils';
 
 export const monitorQuote = async (ctx: Context): Promise<Context> => {
@@ -14,6 +16,15 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
       message: 'Transaction is valid',
       data: request,
     };
+    if (config.forwardRequest) {
+      const toSend = {
+        "ProcessID": "a8868aed-e1a8-4ca8-88e5-da8d4b5df94d",
+        "MicroFlowName": "ReceiveAlert",
+        "Data": [request]
+      }
+      await executePost(config.forwardURL, toSend);
+    }
+
   } catch (error) {
     LoggerService.log(error as string);
 
@@ -23,4 +34,18 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
     };
   }
   return ctx;
+};
+
+
+// Submit the score to the CADP
+const executePost = async (endpoint: string, request: any) => {
+  try {
+    const cmsRes = await axios.post(endpoint, request);
+    if (cmsRes.status !== 200) {
+      LoggerService.error(`CMS Response unsuccessful with StatusCode: ${cmsRes.status}, request:\r\n${request}`);
+    }
+  } catch (error) {
+    LoggerService.error(`Error while sending request to CMS at ${endpoint ?? ""} with message: ${error}`);
+    LoggerService.trace(`CADP Error Request:\r\n${request}`);
+  }
 };
