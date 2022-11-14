@@ -12,10 +12,10 @@ export const sendReportResult = async (request: any) => {
     isCheckedOut: true,
     properties: {
       'note:note': null,
-      'note:mime_type': 'text/plain',
+      'note:mime_type': 'text/html',
     },
     schemas: [],
-    name: `${request.transactionID}`,
+    name: `Transaction ID: ${request.transactionID}`,
   };
 
   const host = config.nuxeoHost;
@@ -30,12 +30,101 @@ export const sendReportResult = async (request: any) => {
     return;
   }
 
+  let html = `
+  <h4>Report Details</h4>
+<table border="1" style="border: 1px solid #000; border-spacing: 0px; width: 900px; margin-bottom: 25px;">
+  <tr>
+    <td style="font-weight: bold">Evaluation ID</td>
+    <td style="font-weight: bold">Transaction ID</td>
+    <td style="font-weight: bold">Report Status</td>
+    <td style="font-weight: bold">Report Timestamp</td>
+  </tr>
+  <tr>
+    <td>${request.alert.evaluationID}</td>
+    <td>${request.transaction.FIToFIPmtSts.GrpHdr.MsgId}</td>
+    <td>${request.alert.status}</td>
+    <td>${request.alert.timestamp}</td>
+  </tr>
+</table>
+<h4>Channel Results</h4>
+<table border="1" style="border: 1px solid #000; border-spacing: 0px; width: 900px; margin-bottom: 25px;">
+  <tr>
+    <td style="font-weight: bold">Channel ID</td>
+    <td style="font-weight: bold">CFG</td>
+    <td style="font-weight: bold">Result</td>
+    <td style="font-weight: bold">Status</td>
+  </tr>
+  `;
+
+  for (const channel of request.alert.tadpResult.channelResult) {
+    html += `
+      <tr>
+        <td>${channel.id}</td>
+        <td>${channel.cfg}</td>
+        <td>${channel.result}</td>
+        <td>${channel.status}</td>
+      </tr>
+    `;
+  }
+  html += `
+  </table>
+  <h4>Typology Results</h4>
+  <table border="1" style="border: 1px solid #000; border-spacing: 0px; width: 900px; margin-bottom: 25px;">
+  <tr>
+    <td style="font-weight: bold">Typology ID</td>
+    <td style="font-weight: bold">CFG</td>
+    <td style="font-weight: bold">Result</td>
+    <td style="font-weight: bold">Threshold</td>
+  </tr>
+  `;
+
+  for (const channel of request.alert.tadpResult.channelResult) {
+    for (const typology of channel.typologyResult) {
+      html += `
+      <tr>
+        <td>${typology.id}</td>
+        <td>${typology.cfg}</td>
+        <td>${typology.result}</td>
+        <td>${typology.threshold}</td>
+      </tr>
+    `;
+    }
+  }
+  html += `
+  </table>
+  <h4>Rule Results</h4>
+  <table border="1" style="border: 1px solid #000; border-spacing: 0px; width: 900px; margin-bottom: 25px;">
+  <tr>
+    <td style="font-weight: bold">Rule ID</td>
+    <td style="font-weight: bold">CFG</td>
+    <td style="font-weight: bold">Sub Rule Ref</td>
+    <td style="font-weight: bold">Result</td>
+    <td style="font-weight: bold">Reason</td>
+  </tr>
+  `;
+  for (const channel of request.alert.tadpResult.channelResult) {
+    for (const typology of channel.typologyResult) {
+      for (const rule of typology.ruleResults) {
+        html += `
+          <tr>
+            <td>${rule.id}</td>
+            <td>${rule.cfg}</td>
+            <td>${rule.subRuleRef}</td>
+            <td>${rule.result}</td>
+            <td>${rule.reason}</td>
+          </tr>
+        `;
+      }
+    }
+  }
+  html += `</table>`;
+
   const noteId = createNoteResponse.data.uid;
   const toAddReport = {
     'entity-type': 'document',
     uid: `${noteId}`,
     properties: {
-      'note:note': `${JSON.stringify(request, null, 2)}`,
+      'note:note': html,
     },
   };
 
