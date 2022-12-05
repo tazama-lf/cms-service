@@ -8,6 +8,10 @@ export interface IConfig {
   apmURL: string;
   forwardRequest: string;
   forwardURL: string;
+  sybrinBaseURL:string;
+  sybrinUsername:string;
+  sybrinPassword:string;
+  sybrinEnvironmentID:string;
   nuxeoAuth: string;
   nuxeoHost: string;
   nuxeoFolderPath: string;
