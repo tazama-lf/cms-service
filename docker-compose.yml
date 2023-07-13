@@ -1,0 +1,4 @@
+services:
+  node:
+    container_name: cms-service
+    build: .
