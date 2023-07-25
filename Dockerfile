@@ -59,6 +59,7 @@ ENV NUXEO_AUTH=
 ENV NUXEO_HOST=
 ENV NUXEO_FOLDER_PATH=
 ENV NUXEO_FOLDER_ID=
+ENV NUEXO_REPORT=false
 
 # Set healthcheck command
 HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
