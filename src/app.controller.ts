@@ -4,9 +4,9 @@ import { config } from './config';
 import { sendReportResult } from './services/nuxeo';
 import { LoggerService } from './utils';
 
-export const monitorQuote = async (ctx: Context): Promise<Context> => {
+export const monitorQuote = async (reqObj: unknown): Promise<void> => {
   try {
-    const request = ctx.request.body ?? JSON.parse('');
+    const request = reqObj ?? JSON.parse('');
     if (request.typologyResult)
       LoggerService.log(
         `CMS received Interdiction from Typology ${request?.typologyResult?.id ?? 0}@${request?.typologyResult?.cfg ?? 0} - Score: ${
@@ -52,20 +52,9 @@ export const monitorQuote = async (ctx: Context): Promise<Context> => {
       }
     }
 
-    ctx.status = 200;
-    ctx.body = {
-      message: 'Transaction is valid',
-      data: request,
-    };
   } catch (error) {
     LoggerService.log(error as string);
-
-    ctx.status = 500;
-    ctx.body = {
-      error: error,
-    };
   }
-  return ctx;
 };
 
 const executePost = async (endpoint: string, request: any) => {

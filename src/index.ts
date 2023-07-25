@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 import { LoggerService } from './utils';
-import App from './app';
 import { config } from './config';
 import apm from 'elastic-apm-node';
+import { monitorQuote } from './app.controller';
+import { IStartupService, StartupFactory } from '@frmscoe/frms-coe-startup-lib';
 
 if (config.apmLogging) {
   apm.start({
@@ -15,16 +16,20 @@ if (config.apmLogging) {
     disableInstrumentations: ['log4js'],
   });
 }
+export let server: IStartupService;
 
-export const runServer = (): void => {
-  /**
-   * KOA Rest Server
-   */
-  const app = new App();
-
-  app.listen(config.restPort, () => {
-    LoggerService.log(`API restServer listening on PORT ${config.restPort}`);
-  });
+export const runServer = async (): Promise<void> => {
+  server = new StartupFactory();
+  if (config.nodeEnv !== 'test')
+    for (let retryCount = 0; retryCount < 10; retryCount++) {
+      console.log('Connecting to nats server...');
+      if (!(await server.init(monitorQuote))) {
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+      } else {
+        console.log('Connected to nats');
+        break;
+      }
+    }
 };
 
 process.on('uncaughtException', (err) => {
@@ -35,8 +40,10 @@ process.on('unhandledRejection', (err) => {
   LoggerService.error(`process on unhandledRejection error: ${err}`);
 });
 
-try {
-  runServer();
-} catch (err) {
-  LoggerService.error('Error while starting HTTP server', err);
+async () => {
+  try {
+    await runServer();
+  } catch (err) {
+    LoggerService.error('Error while starting HTTP server', err);
+  }
 }
