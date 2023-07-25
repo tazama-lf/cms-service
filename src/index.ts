@@ -40,10 +40,10 @@ process.on('unhandledRejection', (err) => {
   LoggerService.error(`process on unhandledRejection error: ${err}`);
 });
 
-async () => {
+(async () => {
   try {
     await runServer();
   } catch (err) {
     LoggerService.error('Error while starting HTTP server', err);
   }
-}
+})();
