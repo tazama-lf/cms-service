@@ -9,7 +9,7 @@ WORKDIR /home/app
 COPY ./src ./src
 COPY ./package*.json ./
 COPY ./tsconfig.json ./
-#COPY .npmrc ./
+COPY .npmrc ./
 ARG GH_TOKEN
 
 RUN npm ci --ignore-scripts
@@ -20,7 +20,7 @@ LABEL stage=pre-prod
 # To filter out dev dependencies from final build
 
 COPY package*.json ./
-#COPY .npmrc ./
+COPY .npmrc ./
 ARG GH_TOKEN
 RUN npm ci --omit=dev --ignore-scripts
 
