@@ -20,16 +20,23 @@ export let server: IStartupService;
 
 export const runServer = async (): Promise<void> => {
   server = new StartupFactory();
-  if (config.nodeEnv !== 'test')
+  if (config.nodeEnv !== 'test') {
+    let isConnected = false;
     for (let retryCount = 0; retryCount < 10; retryCount++) {
       console.log('Connecting to nats server...');
       if (!(await server.init(monitorQuote))) {
         await new Promise((resolve) => setTimeout(resolve, 5000));
       } else {
         console.log('Connected to nats');
+        isConnected = true;
         break;
       }
     }
+
+    if (!isConnected) {
+      throw new Error('Unable to connect to nats after 10 retries');
+    }
+  }
 };
 
 process.on('uncaughtException', (err) => {
@@ -44,6 +51,7 @@ process.on('unhandledRejection', (err) => {
   try {
     await runServer();
   } catch (err) {
-    LoggerService.error('Error while starting HTTP server', err);
+    LoggerService.error('Error while starting services', err);
+    process.exit(1);
   }
 })();
