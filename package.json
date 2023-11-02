@@ -1,6 +1,6 @@
 {
   "name": "cms-service",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "description": "Node.js (TypeScript) HTTP Service for CMS FRM",
   "engines": {
     "node": ">=14"
