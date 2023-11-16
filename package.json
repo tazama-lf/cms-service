@@ -30,7 +30,7 @@
     "test": "jest --passWithNoTests"
   },
   "dependencies": {
-    "@frmscoe/frms-coe-startup-lib": "^2.0.1",
+    "@frmscoe/frms-coe-startup-lib": "^2.1.0",
     "@log4js-node/logstash-http": "^1.1.0",
     "@types/koa": "^2.13.3",
     "@types/koa-bodyparser": "^4.3.1",
