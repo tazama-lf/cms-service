@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
 # CMS-Service
 
 The CMS service is a NodeJs REST-API service that ingests a FRM transaction result and logs the output.
