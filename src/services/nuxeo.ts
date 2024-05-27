@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { config } from '../config';
 import { LoggerService } from '../utils/logger';
 import axios from 'axios';

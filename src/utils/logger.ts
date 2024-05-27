@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { config } from '../config';
 import log4js from 'log4js';
 
