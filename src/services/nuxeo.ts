@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { config } from '../config';
 import { LoggerService } from '../utils/logger';
 import axios from 'axios';
 
-export const sendReportResult = async (request: any) => {
+export const sendReportResult = async (request: any): Promise<void> => {
   const toCreateNote = {
     'entity-type': 'document',
     repository: 'default',
@@ -119,7 +120,7 @@ export const sendReportResult = async (request: any) => {
       }
     }
   }
-  html += `</table>`;
+  html += '</table>';
 
   const noteId = createNoteResponse.data.uid;
   const toAddReport = {
@@ -156,4 +157,4 @@ export const sendReportResult = async (request: any) => {
   if (workflowResponse.status !== 201) {
     LoggerService.error(`Error while sending request to Nuxeo with error: ${workflowResponse.data}`);
   }
-}
+};
