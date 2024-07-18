@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { config } from '../config';
 import log4js from 'log4js';
 
@@ -19,6 +21,8 @@ if (config.nodeEnv !== 'dev' && config.nodeEnv !== 'test') {
 }
 
 const logger = config.nodeEnv === 'dev' || config.nodeEnv === 'test' ? console : log4js.getLogger();
+
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export abstract class LoggerService {
   static timeStamp(): string {
     const dateObj = new Date();

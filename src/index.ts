@@ -1,9 +1,12 @@
-/* eslint-disable no-console */
+// SPDX-License-Identifier: Apache-2.0
+
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable no-console*/
 import { LoggerService } from './utils';
 import { config } from './config';
 import apm from 'elastic-apm-node';
 import { monitorQuote } from './app.controller';
-import { IStartupService, StartupFactory } from '@frmscoe/frms-coe-startup-lib';
+import { type IStartupService, StartupFactory } from '@frmscoe/frms-coe-startup-lib';
 
 if (config.apmLogging) {
   apm.start({
