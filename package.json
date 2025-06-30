@@ -33,7 +33,7 @@
   "dependencies": {
     "@frmscoe/frms-coe-startup-lib": "^2.1.0",
     "@log4js-node/logstash-http": "^1.1.0",
-    "axios": "^1.7.2",
+    "axios": "^1.8.2",
     "dotenv": "^16.4.5",
     "elastic-apm-node": "^4.6.0",
     "log4js": "^6.9.1",
